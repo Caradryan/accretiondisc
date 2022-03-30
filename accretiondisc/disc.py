@@ -282,8 +282,6 @@ def make_empty_arrays(total_steps, n_rings):
     # from mdot
     nu_arr = np.zeros((total_steps, n_rings))  # Viscosity storage
     tau_arr = np.zeros((total_steps, n_rings))  # Optical depth storage
-    mdot_tot_arr = np.zeros((total_steps, n_rings))  # total mdot storage over
-    # whole outer timestep
     bh_mass_arr = np.zeros(total_steps)  # BH mass storage
     mesc_arr = np.zeros(total_steps)  # Escaped mass storage
     bh_mdot_arr = np.zeros(total_steps)  # BH mdot storage
@@ -299,7 +297,6 @@ def make_empty_arrays(total_steps, n_rings):
         ring_luminosity_from_mdot_arr,
         nu_arr,
         tau_arr,
-        mdot_tot_arr,
         bh_mass_arr,
         mesc_arr,
         bh_mdot_arr,
@@ -346,7 +343,6 @@ def do_the_evolution(
         ring_luminosity_from_mdot_arr,
         nu_arr,
         tau_arr,
-        mdot_tot_arr,
         bh_mass_arr,
         mesc_arr,
         bh_mdot_arr,
@@ -467,7 +463,6 @@ def do_the_evolution(
         tau_arr,
         bh_mass_arr,
         mesc_arr,
-        mdot_tot_arr,
         mass_arr,
         bh_mdot_arr,
         temperature_effective_arr,
