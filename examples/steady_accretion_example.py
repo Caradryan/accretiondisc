@@ -56,7 +56,7 @@ Initiating disc evolution
 """
 (D, sigma_arr, 
  ring_luminosity_from_teff_arr, ring_luminosity_from_mdot_arr,
- nu_arr, tau_arr, bh_mass_arr, mesc_arr, mdot_tot_arr, 
+ nu_arr, tau_arr, bh_mass_arr, mesc_arr, 
  mass_arr, bh_mdot_arr, temperature_effective_arr, 
  temperature_center_arr, current_time_arr) = ad.do_the_evolution(D, total_time=tT, fraction_of_time_feed=fF, total_mass_to_feed=tM, dt=DT, mass_portion=8e-8, hsml=0.01, r_circ=0.003)
 print("\n\n This took ",time.time()  - start)
@@ -64,7 +64,7 @@ print("\n\n This took ",time.time()  - start)
 if save_all:
     np.save( save_path + file_name,np.array( (D, sigma_arr, 
              ring_luminosity_from_teff_arr, ring_luminosity_from_mdot_arr,
-             nu_arr, tau_arr, bh_mass_arr, mesc_arr, mdot_tot_arr, 
+             nu_arr, tau_arr, bh_mass_arr, mesc_arr, 
              mass_arr, bh_mdot_arr, temperature_effective_arr, 
              temperature_center_arr, current_time_arr), dtype=object), allow_pickle=True)
 else:
