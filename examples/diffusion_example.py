@@ -7,8 +7,9 @@ Frank, King, Raine 2002
 """
 import numpy as np
 import matplotlib.pyplot as plt
-import units as unt
-from accretiondisc import *
+import accretiondisc.units as unt
+import accretiondisc.disc as ad
+from copy import deepcopy
 import time 
 
 def acc_power_example(Disc,       # passing the Disc
@@ -45,14 +46,14 @@ def acc_power_example(Disc,       # passing the Disc
         If timesteps are too large using these to reset the disc
         """
         Disc_c = deepcopy(Disc)            
-        Disc.ddt = get_diffusion_time_step_jit_wrap(Disc)      
+        Disc.ddt = ad.get_diffusion_time_step_jit_wrap(Disc)      
         diffsteps = np.ceil(dt / np.nanmin(Disc.ddt))
         Disc.ddt = dt / diffsteps
         diffsteps = int(diffsteps)
         fail = False
         dtf = 0
         for dst in range(diffsteps):
-            Disc = diffusion_jit_wrap(Disc)
+            Disc = ad.diffusion_jit_wrap(Disc)
             if ( (Disc.sigma<0).sum()>0 ):
                 """
                 If inner timestep was too large we reset the disc
@@ -94,7 +95,7 @@ save_path = "./"
 
 
 start = time.time()  
-D = Disc(bh_mass=0.8, n_rings=200, mdot=0, mesc=0,
+D = ad.Disc(bh_mass=0.8, n_rings=200, mdot=0, mesc=0,
         rin=1.147e-06, rout=0.01, ctime=0.01, 
         disc_alpha = 0.1, h_r_init=0.002, PW=True)
 

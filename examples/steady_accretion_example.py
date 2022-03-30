@@ -9,8 +9,8 @@ rout is corresponds to the rsink in Gadget our simulations
 """
 import numpy as np
 import matplotlib.pyplot as plt
-import units as unt
-from accretiondisc import *
+import accretiondisc.units as unt
+import accretiondisc.disc as ad
 import time 
 
 
@@ -24,7 +24,7 @@ load_path = "./test_disc.npy"
 """
 Initiating the accretion disc given SMBH  parameters
 """
-D = Disc(bh_mass=0.8, n_rings=100, mdot=0, mesc=0,
+D = ad.Disc(bh_mass=0.8, n_rings=100, mdot=0, mesc=0,
          rin=1.147e-06, rout=0.01, ctime=0.01, 
          disc_alpha = 0.1, h_r_init=0.002, PW=True)
 
@@ -58,7 +58,7 @@ Initiating disc evolution
  ring_luminosity_from_teff_arr, ring_luminosity_from_mdot_arr,
  nu_arr, tau_arr, bh_mass_arr, mesc_arr, mdot_tot_arr, 
  mass_arr, bh_mdot_arr, temperature_effective_arr, 
- temperature_center_arr, current_time_arr) = do_the_evolution(D, total_time=tT, fraction_of_time_feed=fF, total_mass_to_feed=tM, dt=DT, mass_portion=8e-8, hsml=0.01, r_circ=0.003)
+ temperature_center_arr, current_time_arr) = ad.do_the_evolution(D, total_time=tT, fraction_of_time_feed=fF, total_mass_to_feed=tM, dt=DT, mass_portion=8e-8, hsml=0.01, r_circ=0.003)
 print("\n\n This took ",time.time()  - start)
 #%%
 if save_all:

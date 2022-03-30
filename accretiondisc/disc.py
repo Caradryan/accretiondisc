@@ -1,7 +1,7 @@
 import numpy as np
-import units as unt 
+from . import units as unt 
 from numba import jit, njit
-from copy import deepcopy
+from copy import deepcopy 
 from dataclasses import dataclass
 
 """"
