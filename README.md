@@ -59,9 +59,9 @@ D = ad.Disc(
  ) = ad.do_the_evolution(
      D,  # disc object 
      total_time=75,  # total time of simulation run
-     fraction_of_time_feed=fF, # fraction of time that the disc is fed
-     total_mass_to_feed=tM,  # total mass fed to the disc
-     dt=DT,  # "outer" timestep - intervals between 
+     fraction_of_time_feed=0.2,  # fraction of time that the disc is fed
+     total_mass_to_feed=0.02,  # total mass fed to the disc
+     dt=5e-3,  # "outer" timestep - intervals between 
              # disc feeding, diffusion step determination and data storage
      mass_portion=8e-8,  # size of mass portion (discrete SPH particle)
      hsml=0.01,  # smoothing lenght (minimum in an SPH simulation)
