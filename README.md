@@ -7,7 +7,7 @@ Package is managed with _Poetry_:
 ```bash
 poetry install
 ```
-_Poetry_ should manage dependencies automatically. If for whatever reason it is a combination of:
+_Poetry_ should manage dependencies automatically. If for whatever reason it does not a combination of:
 * numba
 * numpy
 * matplotlib
@@ -16,8 +16,6 @@ is required to run the model and examples, although _matplotlib_ is only used fo
 ## Usage
 
 The main model dataclass and functions are in `disc.py`. Model makes use of code units and some constants found in `units.py`. 
-
-An example of a steady accretion simulation is found in `examples/steady_accretion_example.py`.  
 
 A quick example below:
 ```python
@@ -41,8 +39,8 @@ disc = ad.Disc(
 
 
 # a simulation of steady accretion over a period 
-# of time is performed with "do_the_evolution" function 
-# returns disc object at the last step and storage arrays
+# of time is performed with "do_the_evolution" function; 
+# it returns disc object at the last step and some storage arrays
 (disc,  # disc object 
  sigma_arr,  # surface density
  ring_luminosity_from_teff_arr,  # luminosity from Teff 
