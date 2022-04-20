@@ -1,2 +1,4 @@
 examples/*png
 examples/*npy
+dist
+__pycache__

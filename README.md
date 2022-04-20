@@ -26,7 +26,7 @@ import accretiondisc.units as unt
 
 # accretion disc is initiated with 
 # (default values in given example in code units)
-D = ad.Disc(
+disc = ad.Disc(
     bh_mass=0.8,  # SMBH mass
     n_rings=200,  # number of rings comprizing the disc
     mdot=0,  # SMBH accretion rate
@@ -43,7 +43,7 @@ D = ad.Disc(
 # a simulation of steady accretion over a period 
 # of time is performed with "do_the_evolution" function 
 # returns disc object at the last step and storage arrays
-(D,  # disc object 
+(disc,  # disc object 
  sigma_arr,  # surface density
  ring_luminosity_from_teff_arr,  # luminosity from Teff 
  ring_luminosity_from_mdot_arr,  # luminosity from mdot
@@ -57,7 +57,7 @@ D = ad.Disc(
  temperature_center_arr,  # central temperature
  current_time_arr  # time in code units
  ) = ad.do_the_evolution(
-     D,  # disc object 
+     disc,  # disc object 
      total_time=75,  # total time of simulation run
      fraction_of_time_feed=0.2,  # fraction of time that the disc is fed
      total_mass_to_feed=0.02,  # total mass fed to the disc
@@ -68,4 +68,7 @@ D = ad.Disc(
      r_circ=0.003  # mass insertion radius
      )
 ```
+
 An example of a unit mass spreading by diffusion in a disc with constant viscosity is in `examples/diffusion_example.py`.
+
+An example of steadily accreting disc model is in `examples/steady_accretion_example.py`.

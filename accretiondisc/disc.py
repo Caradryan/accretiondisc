@@ -4,14 +4,6 @@ from numba import jit, njit
 from copy import deepcopy 
 from dataclasses import dataclass
 
-""""
-TODO 
-2. make matplotlib optional in main (or remove from main)
-4. Consider removing numba dependence
-5. transfer some consts from class to Units.py 
-"""
-
-
 @dataclass
 class Disc:
     """
@@ -586,7 +578,7 @@ if __name__ == "__main__":
     Initiating the Disc
     """
     print("Will it run?")
-    D = Disc(
+    disc = Disc(
         bh_mass=0.8,
         n_rings=100,
         mdot=0,
@@ -606,9 +598,9 @@ if __name__ == "__main__":
     tM = 0.02 / 100  # Total mass to be inserted
     DT = 5e-3  # outer timestep
     
-    (D, Sigma, LumT, LumM, 
+    (disc, Sigma, LumT, LumM, 
      Nu, Tau, BHMass, esc, dsigTot,
-     SigmadM, bh_mdot_arr, temperature_effective_arr, temperature_center_arr, current_time_arr) = do_the_evolution(D, 
+     SigmadM, bh_mdot_arr, temperature_effective_arr, temperature_center_arr, current_time_arr) = do_the_evolution(disc, 
                                                        total_time=tT, 
                                                        fraction_of_time_feed=fF, 
                                                        total_mass_to_feed=tM, 
