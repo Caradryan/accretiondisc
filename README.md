@@ -2,12 +2,15 @@
 
 A simple model of a thin alpha-accretion disc. We use [Paczyńsk-Wiita](https://ui.adsabs.harvard.edu/abs/1980A&A....88...23P) (PW) potential:
 
-<img src="https://render.githubusercontent.com/render/math?math={\color{gray} \phi = -\frac{\rm{G}M_{\rm{BH} }}{R-R_g}}">
+<p align="left">
+<img src="examples/potential_eq.png" alt="iliustration" width="100"/>
+</p>
 
 to arrive at and solve the viscous diffusion equation:
 
-<img src="https://render.githubusercontent.com/render/math?math={\color{gray} \frac{\partial \Sigma}{\partial t} = \frac{3}{R}\frac{\partial }{\partial R} \left [ \frac{(R - R_{\rm g})^2}{R^{1/2}(R-3R_{\rm g})}\
- \frac{\partial}{\partial R} \left ( \nu \Sigma R^{3/2} \frac{R-\frac{1}{3}R_{\rm g}}{(R-R_{\rm g})^2} \right )  \right ] }">
+<p align="left">
+<img src="examples/diff_eq.png" alt="iliustration" width="500"/>
+</p>
 
 assuming a stable thin accretion disc.
 
