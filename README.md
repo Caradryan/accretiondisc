@@ -3,13 +3,13 @@
 A simple model of a thin alpha-accretion disc. We use [Paczyńsk-Wiita](https://ui.adsabs.harvard.edu/abs/1980A&A....88...23P) (PW) potential:
 
 <p align="left">
-<img src="examples/potential_eq.png" alt="iliustration" width="100"/>
+<img src="examples/potential_eq.png" alt="iliustration" height="50"/>
 </p>
 
 to arrive at and solve the viscous diffusion equation:
 
 <p align="left">
-<img src="examples/diff_eq.png" alt="iliustration" width="500"/>
+<img src="examples/diff_eq.png" alt="iliustration" height="50"/>
 </p>
 
 assuming a stable thin accretion disc.
