@@ -14,7 +14,7 @@ to arrive at and solve the viscous diffusion equation:
 
 assuming a stable thin accretion disc.
 
-Accretion disc is fed by distributing packets of gas over annuli comprizing in the viscinity of some chosen radius.
+Accretion disc is fed by distributing packets of gas over annuli comprising the disc about some chosen radius.
 <p align="center">
 <img src="examples/accretion_iliustration.png" alt="iliustration" width="300"/>
 </p>
