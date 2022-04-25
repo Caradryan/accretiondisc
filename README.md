@@ -1,5 +1,22 @@
 # accretiondisc
-A simple model of a thin alpha-accretion disc
+
+A simple model of a thin alpha-accretion disc. We use [Paczyńsk-Wiita](https://ui.adsabs.harvard.edu/abs/1980A&A....88...23P) (PW) potential :
+$$
+\phi = -\frac{\rm{G}M_{\rm BH}}{R-R_g}
+$$
+to arrive at and solve the viscous diffusion equation:
+$$
+\frac{\partial \Sigma}{\partial t} = \frac{3}{R}\frac{\partial }{\partial R} \left[ \frac{(R - R_{\rm g})^2}{R^{1/2}(R-3R_{\rm g})}\
+ \frac{\partial}{\partial R} \left ( \nu \Sigma R^{3/2} \frac{R-\frac{1}{3}R_{\rm g}}{(R-R_{\rm g})^2} \right )  \right],
+$$
+assuming a stable thin accretion disc.
+
+Accretion disc is fed by distributing packets of gas over annuli comprizing in the viscinity of some chosen radius.
+<p align="center">
+<img src="examples/accretion_iliustration.png" alt="iliustration" width="300"/>
+</p>
+
+This is meant to iliustrate accretion of SPH particles onto an accretion disc sink particle used in hydrodynamical code *Gadget-3*.
 
 ## Installation
 
@@ -67,6 +84,10 @@ disc = ad.Disc(
      )
 ```
 
-An example of a unit mass spreading by diffusion in a disc with constant viscosity is in `examples/diffusion_example.py`.
+An example of a unit mass spreading by diffusion in a disc with constant viscosity is in `examples/diffusion_example.py`. Results should be compared Fig. 5.1. (page 83) [Accretion Power in Astrophysics](https://ui.adsabs.harvard.edu/abs/2002apa..book.....F) or Fig. 1. from [Accretion discs in astrophysic](http://adsabs.harvard.edu/abs/1981ARA%26A..19..137P10.1146/annurev.aa.19.090181.001033)
 
 An example of steadily accreting disc model is in `examples/steady_accretion_example.py`.
+
+## License
+
+See the [LICENSE](LICENSE.md) file for license rights and limitations (MIT).
