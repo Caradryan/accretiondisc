@@ -1,13 +1,13 @@
 # accretiondisc
 
-A simple model of a thin alpha-accretion disc. We use [Paczyńsk-Wiita](https://ui.adsabs.harvard.edu/abs/1980A&A....88...23P) (PW) potential :
+A simple model of a thin alpha-accretion disc. We use [Paczyńsk-Wiita](https://ui.adsabs.harvard.edu/abs/1980A&A....88...23P) (PW) potential:
 
 <img src="https://render.githubusercontent.com/render/math?math={\color{gray} \phi = -\frac{\rm{G}M_{\rm{BH} }}{R-R_g}}">
 
 to arrive at and solve the viscous diffusion equation:
 
-<img src="https://render.githubusercontent.com/render/math?math={\color{gray} \frac{\partial \Sigma}{\partial t} = \frac{3}{R}\frac{\partial }{\partial R} \left[ \frac{(R - R_{\rm g})^2}{R^{1/2}(R-3R_{\rm g})}\
- \frac{\partial}{\partial R} \left ( \nu \Sigma R^{3/2} \frac{R-\frac{1}{3}R_{\rm g}}{(R-R_{\rm g})^2} \right )  \right],}">
+<img src="https://render.githubusercontent.com/render/math?math={\color{gray} \frac{\partial \Sigma}{\partial t} = \frac{3}{R}\frac{\partial }{\partial R} \left [ \frac{(R - R_{\rm g})^2}{R^{1/2}(R-3R_{\rm g})}\
+ \frac{\partial}{\partial R} \left ( \nu \Sigma R^{3/2} \frac{R-\frac{1}{3}R_{\rm g}}{(R-R_{\rm g})^2} \right )  \right ] }">
 
 assuming a stable thin accretion disc.
 
