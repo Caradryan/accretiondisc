@@ -202,7 +202,7 @@ if args.save_all:
     # plt.yscale("log")
     plt.xlabel("t [kyr]")
     plt.tight_layout()
-    plt.savefig(args.save_path + "mass_growth.png", dpi=300)
+    plt.savefig(args.save_path + "mass_growth_example.png", dpi=300)
 
     plt.figure(2, dpi=300)
     plt.title("Radiation efficiency")
@@ -228,7 +228,7 @@ if args.save_all:
     plt.ylabel("$\eta$")
     plt.xlabel("t [kyr]")
     plt.tight_layout()
-    plt.savefig(args.save_path + "mass_growth.png", dpi=300)
+    plt.savefig(args.save_path + "mass_growth_example.png", dpi=300)
     Le = 5.2e44
 
     plt.figure(3, dpi=300)
@@ -256,7 +256,7 @@ if args.save_all:
     plt.yscale("log")
     plt.tight_layout()
     plt.legend()
-    plt.savefig(args.save_path + "luminosity.png", dpi=300)
+    plt.savefig(args.save_path + "luminosity_example.png", dpi=300)
     LM = ring_luminosity_from_mdot_arr.sum(1)
     LT = ring_luminosity_from_teff_arr.sum(1)
 
@@ -267,7 +267,7 @@ if args.save_all:
     plt.xlabel("t [kyr]")
     plt.tight_layout()
     plt.legend()
-    plt.savefig(args.save_path + "luminosity_ratio.png", dpi=300)
+    plt.savefig(args.save_path + "luminosity_ratio_example.png", dpi=300)
 
     plt.figure(5, dpi=300)
     plt.title("SMBH accretion")
@@ -283,6 +283,6 @@ if args.save_all:
     plt.xlabel("t [kyr]")
     plt.tight_layout()
     plt.legend()
-    plt.savefig(args.save_path + "SMBH_accretion.png", dpi=300)
+    plt.savefig(args.save_path + "SMBH_accretion_example.png", dpi=300)
 else:
     print("not plotting")

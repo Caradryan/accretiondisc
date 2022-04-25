@@ -1,4 +1,4 @@
-examples/*png
+examples/*example.png
 examples/*npy
 dist
 accretiondisc/__pycache__/
