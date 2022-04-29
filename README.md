@@ -95,4 +95,4 @@ An example of steadily accreting disc model is in `examples/steady_accretion_exa
 
 This repository uses the MIT license.
 
-See the [LICENSE](LICENSE.md) file for license rights and limitations (MIT).
+See the [LICENSE](https://github.com/Caradryan/accretiondisc/blob/main/LICENSE) file for license rights and limitations (MIT).
