@@ -1,6 +1,6 @@
 # accretiondisc
 
-A simple model of a thin alpha-accretion disc. We use [Paczyńsk-Wiita](https://ui.adsabs.harvard.edu/abs/1980A&A....88...23P) (PW) potential:
+A simple model of a thin alpha-accretion disc. We use [Paczyńsky-Wiita](https://ui.adsabs.harvard.edu/abs/1980A&A....88...23P) (PW) potential:
 
 <p align="left">
 <img src="examples/potential_eq_gray_nobg.png" alt="iliustration" height="43"/>
@@ -87,7 +87,7 @@ disc = ad.Disc(
      )
 ```
 
-An example of a unit mass spreading by diffusion in a disc with constant viscosity is in `examples/diffusion_example.py`. Results should be compared to Fig. 5.1. (page 83) [Accretion Power in Astrophysics](https://ui.adsabs.harvard.edu/abs/2002apa..book.....F) or Fig. 1. from [Accretion discs in astrophysic](http://adsabs.harvard.edu/abs/1981ARA%26A..19..137P10.1146/annurev.aa.19.090181.001033)
+An example of a unit mass spreading by diffusion in a disc with constant viscosity is in `examples/diffusion_example.py`. Results should be compared to Fig. 5.1. (page 83) [Accretion Power in Astrophysics](https://ui.adsabs.harvard.edu/abs/2002apa..book.....F) or Fig. 1. from [Accretion discs in astrophysics](http://adsabs.harvard.edu/abs/1981ARA%26A..19..137P10.1146/annurev.aa.19.090181.001033)
 
 An example of steadily accreting disc model is in `examples/steady_accretion_example.py`.
 
