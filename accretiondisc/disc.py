@@ -462,6 +462,200 @@ def do_the_evolution(
         current_time_arr,
     )
 
+def do_the_evolution_large_chunks(
+    Disc,
+    total_time=75,
+    fraction_of_time_feed=1,
+    total_mass_to_feed=0.02,
+    dt=5e-3,
+    mass_portion=8e-8,
+    hsml=0.01,
+    r_circ=0.003,
+):
+    """
+    Main driving function for 
+    Steady accretion over some period of time
+    
+    the feeding is discrete to approximate particle accretion
+    in Gadget-3
+    """
+    import time  # to meassure time
+
+    feeding_time = total_time * fraction_of_time_feed  # Determining disc feeding time
+    n_steps = feeding_time / dt  # Determine determine outer
+    # outer number of steps
+
+    #mPerStep = total_mass_to_feed / n_steps  # Determine mass fed
+    # over outter step
+
+    #nPerStep = max( 1, int(mPerStep / mass_portion))  # Number of portions of mass
+    #print("nPerStep {}".format(nPerStep))
+
+    n_times_feed = int(total_mass_to_feed / mass_portion)
+    print("should feed {} times".format(n_times_feed))
+
+
+
+    Pfeed = n_times_feed / n_steps
+    Pfeed_int = int(Pfeed)
+    Pfeed_frac = Pfeed % 1
+    print("nsteps : {}\nPfeed : {}\nPfeed_int : {}\nPfeed_frac : {}".format(n_steps, Pfeed, Pfeed_int, Pfeed_frac))
+
+    feed_counter = 0
+    
+    """
+    Declaring storage arrays
+    """
+    (
+        sigma_arr,
+        mass_arr,
+        ring_luminosity_from_teff_arr,
+        ring_luminosity_from_mdot_arr,
+        nu_arr,
+        tau_arr,
+        bh_mass_arr,
+        mesc_arr,
+        bh_mdot_arr,
+        temperature_effective_arr,
+        temperature_center_arr,
+        current_time_arr,
+    ) = make_empty_arrays(int(n_steps / fraction_of_time_feed), Disc.n_rings)
+    """
+    Outer steps
+    """
+    for st in range(int(n_steps / fraction_of_time_feed)):
+        
+        """
+        Check if we should feed the disc
+        """
+        if feed_counter<n_times_feed:#st <= int(n_steps) or :
+            
+        #feed_counter = 0
+            #if (st % (n_steps / n_times_feed) )==0 or just_feed:
+         #       print(feed_counter)
+         #       feed_counter+=1
+            """
+            Inserting mass using a select function
+            """
+            n_feed = Pfeed_int 
+            p_local = np.random.uniform(0,1)
+            if p_local<Pfeed_frac:
+                n_feed+=1
+
+            if n_feed+feed_counter>n_times_feed:
+                n_feed = n_times_feed-feed_counter
+
+            Disc.sigma += disc_feeding_const_r(
+                Disc.n_rings,
+                Disc.rct,
+                Disc.rout,
+                Disc.area,
+                mass_portion=mass_portion*n_feed,
+                r_circ=r_circ,
+                hsml=hsml,
+            )
+            Disc.mass_fed += mass_portion*n_feed
+            feed_counter+=1*n_feed
+        Disc.ctime = 0.01  # reseting courant number
+        Disc = update_params_jit_wrap(Disc)  # updating disc parameters
+        Disc.diffusion_switch = True  # turning on diffusion iteration
+        Disc.mdot_tot = np.zeros(Disc.n_rings)  # declaring current mdot_tot
+
+        """
+        diffusion iteration
+        """
+        while Disc.diffusion_switch: 
+            """
+            Copying current Disc
+            If timesteps are too large using these to reset the disc
+            """
+            Disc_c = deepcopy(Disc)            
+            Disc.ddt = get_diffusion_time_step_jit_wrap(
+                Disc
+            )  # determining the inner timestep
+            diffsteps = np.ceil(dt / np.nanmin(Disc.ddt))
+            Disc.ddt = dt / diffsteps
+            diffsteps = int(diffsteps)
+            #print( 
+            #    "\r At step {:3d}| diffstep {:5d} | total {:5d} | ddt {:3e} | feed_counter {:d}".format(
+            #        st, diffsteps,int(n_steps / fraction_of_time_feed), Disc.ddt, feed_counter), 
+            #end="",flush=True)
+            
+            for dst in range(diffsteps):
+                Disc = diffusion_jit_wrap(Disc)
+                if (Disc.sigma < 0).sum() > 0:
+                    """
+                    If inner timestep was too large we reset the disc
+                    and repeat with smaller inner timestep
+                    """
+                    Disc = Disc_c
+                    Disc.ctime *= 0.5
+                    break
+                Disc = update_params_jit_wrap(Disc)  # Updating disc parameters
+                
+            """
+            Things that need to happen once during each diffusion phase
+            """
+            if dst == diffsteps - 1:
+                """
+                Using mean mdot to determine Luminosity
+                """
+                Disc.ring_luminosity_from_mdot = (
+                    Disc.mdot_tot / diffsteps * Disc.bh_mass * Disc.lum_fact
+                )
+                """
+                Using disc parameters to determine temperature_effective 
+                And luminosity from temperature_effective
+                """
+                mask = Disc.tau > 0
+                Disc.temperature_effective[mask] = (
+                    Disc.temperature_center[mask] ** 4  # here its temperature^4
+                    * 4 / 3 / Disc.tau[mask]
+                )
+                Disc.ring_luminosity_from_teff = (
+                    Disc.lum_fact_teff * Disc.temperature_effective
+                )  # here its temperature^4
+                Disc.ring_luminosity_from_teff[-1] = 0
+                Disc.ring_luminosity_from_teff[0] = 0
+                Disc.diffusion_switch = False 
+                # End of diffusion step; finished with one outer timestep
+                
+         
+        
+        """
+        Filling storage arrays for this step
+        """
+        Disc.current_time += dt
+        temperature_center_arr[st, :] = Disc.temperature_center
+        temperature_effective_arr[st, :] = Disc.temperature_effective ** (1 / 4)
+        ring_luminosity_from_teff_arr[st, :] = Disc.ring_luminosity_from_teff
+        ring_luminosity_from_mdot_arr[st, :] = Disc.ring_luminosity_from_mdot
+        sigma_arr[st, :] = Disc.sigma
+        mass_arr[st, :] = Disc.mass
+        tau_arr[st, :] = Disc.tau
+        nu_arr[st, :] = Disc.nu
+        bh_mass_arr[st] = Disc.bh_mass
+        bh_mdot_arr[st] = Disc.mdot
+        mesc_arr[st] = Disc.mesc
+        current_time_arr[st] = Disc.current_time 
+    print("Disc fed {} times", feed_counter)
+    return (
+        Disc,
+        sigma_arr,
+        ring_luminosity_from_teff_arr,
+        ring_luminosity_from_mdot_arr,
+        nu_arr,
+        tau_arr,
+        bh_mass_arr,
+        mesc_arr,
+        mass_arr,
+        bh_mdot_arr,
+        temperature_effective_arr,
+        temperature_center_arr,
+        current_time_arr,
+    )
+
+
 
 @njit()
 def diffusion_jit(sigma, area, nu, 

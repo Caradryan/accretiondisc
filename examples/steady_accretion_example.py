@@ -54,6 +54,9 @@ parser.add_argument(
     "--total_mass", type=float, default=0.02 / 100, help="mass fed over given time"
 )
 parser.add_argument(
+    "--portion_size", type=float, default=8e-8, help="size of a 'single particle'"
+)
+parser.add_argument(
     "--outer_timestep",
     type=float,
     default=5e-3,
@@ -81,6 +84,8 @@ print(
     args.fraction_feed,
     "\n--total_mass",
     args.total_mass,
+    "\n--portion_size",
+    args.portion_size,
     "\n--outer_timestep",
     args.outer_timestep,
 )
@@ -90,11 +95,11 @@ Initiating the accretion disc given SMBH  parameters
 """
 disc = ad.Disc(
     bh_mass=0.8,  # SMBH mass
-    n_rings=100,  # number of rings comprizing the disc
+    n_rings=200,  # number of rings comprizing the disc
     mdot=0,  # SMBH accretion rate
     mesc=0,  # amount of matter that escaped the disc
     rin=1.147e-06,  # inner boundary, assumed ISCO
-    rout=0.01,  # outer boundary
+    rout=1.,  # outer boundary
     ctime=0.01,  # courant factor
     disc_alpha=0.1,  # accretion disc alpha (~0.1 is ok)
     h_r_init=0.002,  # height to radius ratio
@@ -138,19 +143,17 @@ Initiating disc evolution
     temperature_effective_arr,  # effective temperature
     temperature_center_arr,  # central temperature
     current_time_arr,  # time in code units
-) = ad.do_the_evolution(
+) = ad.do_the_evolution_large_chunks(
     disc,  # disc object
     total_time=args.total_time,  # total time of simulation run
     fraction_of_time_feed=args.fraction_feed,  # fraction of time that the disc is fed
     total_mass_to_feed=args.total_mass,  # total mass fed to the disc
     dt=args.outer_timestep,  # "outer" timestep - intervals between
     # disc feeding, diffusion step determination and data storage
-    mass_portion=8e-8,  # size of mass portion (discrete SPH particle)
-    hsml=0.01,  # smoothing lenght (minimum in an SPH simulation)
-    r_circ=0.003,  # mass insertion radius
+    mass_portion=args.portion_size,  # size of mass portion (discrete SPH particle)
+    hsml=1,  # smoothing lenght (minimum in an SPH simulation)
+    r_circ=0.3,  # mass insertion radius
 )
-
-
 print("\n\n This took ", time.time() - start)
 #%%
 if args.save_all:
